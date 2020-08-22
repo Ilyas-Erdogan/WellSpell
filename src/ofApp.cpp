@@ -47,7 +47,7 @@ void ofApp::draw() {
 		ofSetColor(255);
 		// Activate session so that location doesn't change
 			// Draw image according to name using index
-		int i{0}
+		int i{ 0 };
 		index = i;
 		image.draw(ofGetWidth() / 2, ofGetHeight() / 2 - 200);
 		image.resize(400, 266);
