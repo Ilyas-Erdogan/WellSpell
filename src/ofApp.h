@@ -23,7 +23,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 	
 	//Display variables
-		bool displayTitleScreen{ true }, gameScreen{ false }, displayInstructScreen{ false }, displaySettScreen{ false };
+		bool displayTitleScreen{ true }, gameScreen{ false }, displayInstructScreen{ false }, displaySettScreen{ false }, finalScreen{ false };
 	
 	// Title Screen variable
 	string titleText, overTitleText, startText, instructText, settingsText;

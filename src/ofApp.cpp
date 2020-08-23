@@ -133,10 +133,10 @@ void ofApp::draw() {
 			else if (correctWord.length() == 5) {
 				checkmark.draw(ofGetWidth() / 2 + 200, ofGetHeight() / 2 + 60);
 			}
-			i++; // Move on to next picture
+			score++;
+			++i; // Move on to next picture
 		}
 		else if (attemptedWord.length() == correctWord.length() && attemptedWord != correctWord) {
-			std::cout << "Incorrect";
 			wrongSound.play();
 			attemptedWord = "";
 			//Draw xmark beside word (based on number of letters)
@@ -373,10 +373,31 @@ void ofApp::draw() {
 	ofDrawRectangle(0, 0, ofGetWidth() * 2, 40);
 	ofDrawRectangle(0, ofGetHeight(), ofGetWidth() * 2, 40);
 
+	titleFont.load("Berka-Light.ttf", 35);
+	ofSetColor(255);
+	titleFont.drawString("Instructions:",45,55);
+	titleFont.load("Berka-Light.ttf", 40);
+	titleFont.drawString("1. Look at the picture\n2. Guess what the photo is\n3. Click on letters to spell word\n(Press Q to return to menu)",45,95);
+
 	ofSetColor(255, 250, 215);
+}	
+	else if (finalScreen) {
+		ofBackground(26, 65, 46);
+		// Draw border of chalkboard
+		ofSetColor(221, 166, 74);
+		// Left and Right bar
+		ofDrawRectangle(0, 0, 40, ofGetHeight() * 2);
+		ofDrawRectangle(ofGetWidth(), 0, 40, ofGetHeight() * 2);
+		// Top and bottom bar
+		ofDrawRectangle(0, 0, ofGetWidth() * 2, 40);
+		ofDrawRectangle(0, ofGetHeight(), ofGetWidth() * 2, 40);
+
+		ofSetColor(255, 250, 215);
+		titleFont.drawString("Your score is:", ofGetWidth() / 2 - 190, ofGetHeight() / 2);
+		titleFont.drawString(to_string(score), ofGetWidth() / 2, ofGetHeight() / 2 + 50);
 }
 	// Check if failed three times
-	if (tries == 3) {
+	if (tries == 10) {
 		tries = 0;
 		attemptedWord = "";
 		//DISPLAY CORRECT WORD
@@ -412,6 +433,10 @@ void ofApp::draw() {
 		}
 		i++;
 	}
+	if (i == 1) {
+		gameScreen = false;
+		finalScreen = true;
+	}
 }
 
 //--------------------------------------------------------------
@@ -434,6 +459,12 @@ void ofApp::keyPressed(int key){
 			displayTitleScreen = true;
 		}
 	}
+	else if (displayInstructScreen) {
+		if (key == 'q') {
+			displayInstructScreen = false;
+			displayTitleScreen = true;
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -453,7 +484,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	std::cout << x << " " << y << std::endl;
 	if (displayTitleScreen) {
 		// Check if mouseis in button area
 		if ((x >= (ofGetWidth() / 2 - 250) && x <= (ofGetWidth() / 2 - 50)) && (y >= (ofGetHeight() / 2 + 30) && y <= (ofGetHeight() / 2 + 130))) {
